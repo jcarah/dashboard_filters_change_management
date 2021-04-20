@@ -1,6 +1,6 @@
 # Dashboard Filter Change Management
 
-Identify references to dashboard filters with specific default values. This is intended to help retire old/obsolete references to old fields or default values. In the future, this repo will also include functions that allow you to find and replace default filter values.
+Identify references to dashboard filters with specific default values. This is intended to help retire old/obsolete references to fields or filter default values. In the future, this repo will also include functions that allow you to find and replace default filter values.
 
 ### Prerequisites
 
