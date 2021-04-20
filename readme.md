@@ -9,7 +9,7 @@ This script relies on the new Looker [Python SDK](https://github.com/looker-open
 
 ### Getting started
 
-* Clone this repo, and configure a file called `looker.ini` in the same directory as the two Python scripts. Follow the instructions [here](https://github.com/looker-open-source/sdk-codegen/tree/master/python#configuring-the-sdk) for more detail on how to structure the `.ini` file. The docs also describe how to use environment variables for API authentication if you so prefer.
+* Clone this repo, and configure a file called `looker.ini` in the same directory as the Python scripts. Follow the instructions [here](https://github.com/looker-open-source/sdk-codegen/tree/master/python#configuring-the-sdk) for more detail on how to structure the `.ini` file. The docs also describe how to use environment variables for API authentication if you so prefer.
 * Install all Python dependencies in `requirements.txt`
 
 ### Usage
