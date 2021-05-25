@@ -1,5 +1,6 @@
 
 import looker_sdk # pip install looker_sdk
+from looker_sdk import models
 from pprint import pprint
 import csv
 import argparse
@@ -66,6 +67,19 @@ def write_output_to_csv(output, output_csv_name):
     except IOError:
         print("I/O error")
 
+def read_csv(csv_file_path):
+    """Reads data from a csv and converts a list of dictionaries"""
+    data = []
+    with open(csv_file_path, encoding='utf-8') as csvf: 
+        csvReader = csv.DictReader(csvf) 
+        for row in csvReader: 
+            data.append(row)
+    return data
+
+def update_dashboard_filter_default_value(filter_id,default_value):
+    filter_body = models.WriteDashboardFilter(default_value=default_value)
+    sdk.update_dashboard_filter(str(filter_id),filter_body)
+    
 def main():
     parser = argparse.ArgumentParser(
         description="Find dashboard filters that are tied to a specific dimension and have specific default arguement.")
@@ -73,6 +87,8 @@ def main():
                         help="The default filter value to search for. Required.")
     parser.add_argument("--dimension", "-d", type=str,required=False,
                         help="The fully qualified dimension name. e.g., 'products.brand'. Optional.")
+    parser.add_argument("--replacement", "-r", type=str,required=False,
+                        help="The replacement default value to update existing dashboard filters. Optional." )
     args = parser.parse_args()
     dimension = args.dimension
     default_value = args.default_value
@@ -98,8 +114,35 @@ def main():
         except Exception as e:
             print(f"Error: {e}")
             print("Skipping")
+            pass 
+    write_output_to_csv(
+        output, "original_dashboard_filters.csv"
+    )   
+    if args.replacement and len(output) > 0:
+        try:
+            replacement_value = args.replacement
+            for dashboard_filter in output:
+                print(f"""
+                    Updating default filter value for filter_id {
+                        dashboard_filter["dashboard_filter_id"]
+                    } on dashboard {dashboard_filter["dashboard_id"]}"""
+                )
+                updated_default = dashboard_filter[
+                        "default_value"
+                    ].replace(default_value, replacement_value)
+                update_dashboard_filter_default_value(
+                    dashboard_filter["dashboard_filter_id"],
+                    updated_default
+                )
+                dashboard_filter["default_value"] = updated_default
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Skipping")
             pass
-    pprint(output)
-    write_output_to_csv(output, 'dashboard_filters.csv')
-
+        print("Updated filters:")    
+        pprint(output)
+        write_output_to_csv(
+            output, "updated_dashboard_filters.csv"
+        )
+    
 main()
