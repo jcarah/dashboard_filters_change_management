@@ -17,11 +17,11 @@ This script relies on the new Looker [Python SDK](https://github.com/looker-open
 ``` Arguments:
   -h, --help            show this help message and exit
   --default_value DEFAULT_VALUE, -v DEFAULT_VALUE
-        The default filter value to search for. Required.
+      The default filter value to search for. Required.
   --dimension DIMENSION, -d DIMENSION
-        The fully qualified dimension name. e.g., 'products.brand'. Optional.
+      The fully qualified dimension name. e.g., 'products.brand'. Optional.
   --replacement REPLACEMENT, -r REPLACEMENT
-        The replacement default value to update existing dashboard filters. Optional
+      The replacement default value to update existing dashboard filters. Optional
 ```
 
 To run the script, run the following:
